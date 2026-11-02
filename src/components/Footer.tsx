@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Heart, Globe, Sparkles } from 'lucide-react';
+import { ShieldCheck, Globe, ArrowRight } from 'lucide-react';
 import { ActivePage } from './Navbar';
 
 interface FooterProps {
@@ -22,9 +22,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onScrollToSection })
   return (
     <footer className="bg-slate-900 text-slate-400 text-xs border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand Col */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-md">
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,34 +38,36 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onScrollToSection })
             </div>
 
             <p className="text-slate-400 text-xs leading-relaxed max-w-sm">
-              <strong className="text-slate-200">OptiPress: Compress Smarter. Save More.</strong> A free, modern online image compression tool that helps people shrink JPG, PNG, and WebP files directly in their browser without uploading files to remote servers.
+              <strong className="text-slate-200">OptiPress: Compress Smarter. Save More.</strong> A free, modern online image compression tool that reduces JPG, PNG, and WebP files directly in your web browser.
             </p>
 
             <div className="flex items-center gap-2 text-[11px] text-emerald-400 bg-emerald-950/40 border border-emerald-800/40 rounded-xl px-3 py-1.5 w-fit">
               <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-400" />
-              <span>100% In-Browser Execution • Zero Server Uploads</span>
+              <span>100% In-Browser Canvas Processing</span>
             </div>
           </div>
 
-          {/* Col 2: Navigation */}
+          {/* Col 2: Compressor Tools */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-3">Tool Navigation</h4>
-            <ul className="space-y-2">
+            <h4 className="text-white font-semibold text-sm mb-3">Image Compressor</h4>
+            <ul className="space-y-2.5">
               <li>
                 <button
                   type="button"
                   onClick={() => handleLink('home', 'compressor-tool')}
-                  className="hover:text-white transition"
+                  className="hover:text-white transition flex items-center gap-1.5"
                 >
-                  Image Compressor
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                  Compress Images
                 </button>
               </li>
               <li>
                 <button
                   type="button"
                   onClick={() => handleLink('home', 'how-it-works')}
-                  className="hover:text-white transition"
+                  className="hover:text-white transition flex items-center gap-1.5"
                 >
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-600"></span>
                   How Compression Works
                 </button>
               </li>
@@ -73,8 +75,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onScrollToSection })
                 <button
                   type="button"
                   onClick={() => handleLink('home', 'benefits')}
-                  className="hover:text-white transition"
+                  className="hover:text-white transition flex items-center gap-1.5"
                 >
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-600"></span>
                   Benefits & Features
                 </button>
               </li>
@@ -82,84 +85,89 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onScrollToSection })
                 <button
                   type="button"
                   onClick={() => handleLink('home', 'faq')}
-                  className="hover:text-white transition"
+                  className="hover:text-white transition flex items-center gap-1.5"
                 >
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-600"></span>
                   Frequently Asked Questions
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Company / About */}
+          {/* Col 3: Company & Information Pages */}
           <div>
             <h4 className="text-white font-semibold text-sm mb-3">About & Contact</h4>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               <li>
                 <button
                   type="button"
                   onClick={() => handleLink('about')}
-                  className="hover:text-white transition"
+                  className="hover:text-white transition flex items-center gap-1.5 font-medium"
                 >
-                  About OptiPress
+                  <ArrowRight className="w-3.5 h-3.5 text-blue-400" />
+                  About Us
                 </button>
               </li>
               <li>
                 <button
                   type="button"
                   onClick={() => handleLink('contact')}
-                  className="hover:text-white transition"
+                  className="hover:text-white transition flex items-center gap-1.5 font-medium"
                 >
-                  Contact Support
+                  <ArrowRight className="w-3.5 h-3.5 text-blue-400" />
+                  Contact Us
                 </button>
               </li>
-              <li className="pt-2 text-slate-500 text-[11px]">
-                Support: <code className="text-slate-400 font-mono">[support@optipress.example.com]</code>
-              </li>
             </ul>
+            <p className="mt-4 text-[11px] text-slate-500 leading-relaxed">
+              OptiPress is a free, web-native utility created to provide private image compression without account walls or fees.
+            </p>
           </div>
 
-          {/* Col 4: Legal */}
+          {/* Col 4: Legal & Privacy Pages */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-3">Legal & Terms</h4>
-            <ul className="space-y-2">
+            <h4 className="text-white font-semibold text-sm mb-3">Privacy & Terms</h4>
+            <ul className="space-y-2.5">
               <li>
                 <button
                   type="button"
                   onClick={() => handleLink('privacy')}
-                  className="hover:text-white transition"
+                  className="hover:text-white transition flex items-center gap-1.5 font-medium"
                 >
-                  Privacy Policy (Draft)
+                  <ArrowRight className="w-3.5 h-3.5 text-emerald-400" />
+                  Privacy Policy
                 </button>
               </li>
               <li>
                 <button
                   type="button"
                   onClick={() => handleLink('terms')}
-                  className="hover:text-white transition"
+                  className="hover:text-white transition flex items-center gap-1.5 font-medium"
                 >
-                  Terms of Use (Draft)
+                  <ArrowRight className="w-3.5 h-3.5 text-purple-400" />
+                  Terms of Use
                 </button>
               </li>
-              <li className="pt-2 text-slate-500 text-[11px] leading-relaxed">
-                All legal terms are honest draft templates. Placeholder entity: [OptiPress Web Project].
-              </li>
             </ul>
+            <p className="mt-4 text-[11px] text-slate-500 leading-relaxed">
+              Transparent, honest policies accurately reflecting our client-side, zero-tracking web architecture.
+            </p>
           </div>
         </div>
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
           <div>
-            © {currentYear} OptiPress. All rights reserved. Free and accessible worldwide, including India.
+            © {currentYear} OptiPress. Free online image compressor. Accessible worldwide, including India.
           </div>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">
               <Globe className="w-3.5 h-3.5 text-blue-400" /> Global Data Saver
             </span>
             <span>•</span>
-            <span>No Cookies Trackers</span>
+            <span>No Cookies or Trackers</span>
             <span>•</span>
-            <span>HTML5 Canvas Engine</span>
+            <span>Client-Side Execution</span>
           </div>
         </div>
       </div>

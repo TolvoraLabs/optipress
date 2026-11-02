@@ -553,11 +553,17 @@ export default function App() {
           <AboutPage onGoToCompressor={() => handleNavigate('home')} />
         )}
 
-        {activePage === 'contact' && <ContactPage />}
+        {activePage === 'contact' && (
+          <ContactPage onGoToCompressor={() => handleNavigate('home')} />
+        )}
 
-        {activePage === 'privacy' && <PrivacyPage />}
+        {activePage === 'privacy' && (
+          <PrivacyPage onGoToCompressor={() => handleNavigate('home')} />
+        )}
 
-        {activePage === 'terms' && <TermsPage />}
+        {activePage === 'terms' && (
+          <TermsPage onGoToCompressor={() => handleNavigate('home')} />
+        )}
       </main>
 
       {/* Comparison Modal */}

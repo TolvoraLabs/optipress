@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onScroll
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
-              About
+              About Us
             </button>
 
             <button
@@ -112,7 +112,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onScroll
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
-              Contact
+              Contact Us
             </button>
           </nav>
 
@@ -186,7 +186,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onScroll
               activePage === 'about' ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-50'
             }`}
           >
-            About OptiPress
+            About Us
           </button>
           <button
             type="button"
@@ -195,7 +195,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onScroll
               activePage === 'contact' ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-50'
             }`}
           >
-            Contact Support
+            Contact Us
           </button>
           <button
             type="button"

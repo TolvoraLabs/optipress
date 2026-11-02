@@ -1,215 +1,292 @@
 import React, { useState } from 'react';
-import { Mail, MessageSquare, Clock, MapPin, Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import {
+  Mail,
+  Send,
+  Copy,
+  CheckCircle2,
+  AlertCircle,
+  ArrowLeft,
+  MessageSquare,
+  ExternalLink,
+  ShieldAlert,
+} from 'lucide-react';
 
-export const ContactPage: React.FC = () => {
+interface ContactPageProps {
+  onGoToCompressor?: () => void;
+}
+
+export const ContactPage: React.FC<ContactPageProps> = ({ onGoToCompressor }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     message: '',
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [copied, setCopied] = useState(false);
+  const [preparedForEmail, setPreparedForEmail] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [showManualText, setShowManualText] = useState(false);
+
+  const formatMessagePayload = () => {
+    return `Name: ${formData.name.trim()}
+Email: ${formData.email.trim()}
+Subject: ${formData.subject.trim() || 'General Inquiry'}
+
+Message:
+${formData.message.trim()}
+
+---
+Sent regarding OptiPress (Online Image Compressor)`;
+  };
+
+  const handleOpenEmailClient = (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMessage(null);
+    setValidationError(null);
 
+    if (!formData.name.trim()) {
+      setValidationError('Please enter your name.');
+      return;
+    }
+    if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      setValidationError('Please enter a valid email address.');
+      return;
+    }
+    if (!formData.message.trim()) {
+      setValidationError('Please write a message before sending.');
+      return;
+    }
+
+    const emailSubject = encodeURIComponent(
+      formData.subject.trim()
+        ? `[OptiPress Feedback] ${formData.subject.trim()}`
+        : `[OptiPress Feedback] Inquiry from ${formData.name.trim()}`
+    );
+    const emailBody = encodeURIComponent(formatMessagePayload());
+
+    // Launch user's default email client with pre-filled content
+    window.location.href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
+    setPreparedForEmail(true);
+  };
+
+  const handleCopyToClipboard = async () => {
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setErrorMessage('Please fill in your name, valid email address, and message.');
+      setValidationError('Please fill in your name, email, and message to copy the formatted text.');
       return;
     }
+    setValidationError(null);
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      setErrorMessage('Please enter a valid email address.');
-      return;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(formatMessagePayload());
+        setCopied(true);
+        setShowManualText(false);
+        setTimeout(() => setCopied(false), 3000);
+      } else {
+        throw new Error('Clipboard API unavailable');
+      }
+    } catch {
+      // Fallback using temporary textarea
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = formatMessagePayload();
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textArea);
+        if (successful) {
+          setCopied(true);
+          setShowManualText(false);
+          setTimeout(() => setCopied(false), 3000);
+        } else {
+          setShowManualText(true);
+          setValidationError('Clipboard access was blocked by your browser. Please select and copy your message text from the box below.');
+        }
+      } catch {
+        setShowManualText(true);
+        setValidationError('Clipboard access was blocked by your browser. Please select and copy your message text from the box below.');
+      }
     }
-
-    setIsSubmitting(true);
-
-    // Simulate sending with instant feedback
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 600);
   };
 
   return (
     <div className="py-12 sm:py-20 bg-white">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Navigation Breadcrumb / Back button */}
+        {onGoToCompressor && (
+          <div className="mb-8">
+            <button
+              type="button"
+              onClick={onGoToCompressor}
+              className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-blue-600 transition"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Image Compressor
+            </button>
+          </div>
+        )}
+
         {/* Header */}
-        <div className="text-center mb-16">
-          <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-700 border border-blue-200">
-            Get In Touch
+        <div className="text-center mb-12">
+          <span className="px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-700 border border-blue-200">
+            Contact Us
           </span>
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 mt-4 tracking-tight">
-            Contact the OptiPress Team
+          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 mt-4 tracking-tight">
+            Get in Touch
           </h1>
-          <p className="text-slate-600 text-base sm:text-lg mt-3 max-w-xl mx-auto">
-            Have questions, feedback, or need help with image optimization? Send us a message below.
+          <p className="text-slate-600 text-base sm:text-lg mt-3 max-w-xl mx-auto leading-relaxed">
+            Have questions, suggestions, bug reports, or feedback about OptiPress? Fill out the form below.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Contact Details (Clearly marked placeholders per prompt requirement) */}
-          <div className="space-y-6">
-            <div className="bg-slate-50 border border-slate-200/90 rounded-2xl p-6 sm:p-7">
-              <h3 className="font-bold text-slate-900 text-base mb-4 flex items-center gap-2">
-                <Mail className="w-5 h-5 text-blue-600" />
-                Contact Information
-              </h3>
+        {/* Transparent Communication Notice */}
+        <div className="mb-8 p-4 rounded-2xl bg-blue-50/70 border border-blue-200/80 text-xs text-slate-700 flex items-start gap-3">
+          <MessageSquare className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+          <div className="leading-relaxed">
+            <strong className="text-slate-900 block font-semibold mb-0.5">How this contact method works:</strong>
+            OptiPress is a client-side web utility that runs inside your browser without backend databases. Because of this, messages are not stored on an OptiPress server. Submitting this form prepares your message and launches your device's email client, or you can copy the text to send through any platform you prefer.
+          </div>
+        </div>
 
-              <div className="space-y-4 text-xs sm:text-sm text-slate-600">
-                <div>
-                  <span className="font-semibold text-slate-700 block">General Inquiries & Feedback:</span>
-                  <code className="text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-100 font-mono text-xs">
-                    [contact@optipress.example.com]
-                  </code>
-                </div>
+        {/* Main Form Container */}
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-10 shadow-xs">
+          {validationError && (
+            <div className="mb-6 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+              <span>{validationError}</span>
+            </div>
+          )}
 
-                <div>
-                  <span className="font-semibold text-slate-700 block">Privacy & Legal Notices:</span>
-                  <code className="text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-100 font-mono text-xs">
-                    [privacy@optipress.example.com]
-                  </code>
-                </div>
-
-                <div className="pt-2 border-t border-slate-200/70">
-                  <span className="font-semibold text-slate-700 flex items-center gap-1.5 mb-1">
-                    <Clock className="w-4 h-4 text-slate-400" />
-                    Estimated Response Window:
-                  </span>
-                  <p className="text-slate-500 text-xs">
-                    [Within 24 to 48 business hours]
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-slate-200/70">
-                  <span className="font-semibold text-slate-700 flex items-center gap-1.5 mb-1">
-                    <MapPin className="w-4 h-4 text-slate-400" />
-                    Operating Location:
-                  </span>
-                  <p className="text-slate-500 text-xs">
-                    [To be specified upon formal entity incorporation / Online Web Service]
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-6 pt-4 border-t border-slate-200 text-[11px] text-slate-400">
-                Notice: All image processing runs strictly in your browser. Our support team has zero access to your photos.
+          {preparedForEmail && (
+            <div className="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-start gap-3">
+              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600 mt-0.5" />
+              <div>
+                <strong className="font-semibold block mb-0.5">Email Client Opened!</strong>
+                Your default email application was opened with your message pre-filled. If it didn't open automatically, use the "Copy Message to Clipboard" button below to copy and paste your text.
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Contact Form */}
-          <div className="lg:col-span-2">
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs">
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Send us a message</h3>
-              <p className="text-xs text-slate-500 mb-6">
-                Fill in the form below and we will get back to you as soon as possible.
-              </p>
+          <form onSubmit={handleOpenEmailClient} className="space-y-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {/* Name Field */}
+              <div>
+                <label htmlFor="contact-name" className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  Your Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="contact-name"
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g. Alex Sharma"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-hidden"
+                />
+              </div>
 
-              {submitted ? (
-                <div className="p-8 text-center bg-emerald-50 border border-emerald-200 rounded-2xl animate-fadeIn">
-                  <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center mb-3">
-                    <CheckCircle2 className="w-6 h-6" />
-                  </div>
-                  <h4 className="text-lg font-bold text-emerald-900 mb-1">Thank you! Message Sent.</h4>
-                  <p className="text-xs text-emerald-700 max-w-sm mx-auto mb-4">
-                    Your inquiry has been received. Our team will review your message and reply to your email shortly.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setSubmitted(false)}
-                    className="px-4 py-2 bg-white border border-emerald-300 text-emerald-800 rounded-xl text-xs font-semibold hover:bg-emerald-50 transition"
-                  >
-                    Send Another Message
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {errorMessage && (
-                    <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
-                      <span>{errorMessage}</span>
-                    </div>
-                  )}
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="contact-name" className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Your Name *
-                      </label>
-                      <input
-                        id="contact-name"
-                        type="text"
-                        required
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="John Doe"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-hidden"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="contact-email" className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Your Email *
-                      </label>
-                      <input
-                        id="contact-email"
-                        type="email"
-                        required
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="john@example.com"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-hidden"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="contact-subject" className="block text-xs font-semibold text-slate-700 mb-1.5">
-                      Subject
-                    </label>
-                    <input
-                      id="contact-subject"
-                      type="text"
-                      value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      placeholder="e.g. Feature suggestion or question about compression"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-hidden"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="contact-message" className="block text-xs font-semibold text-slate-700 mb-1.5">
-                      Message *
-                    </label>
-                    <textarea
-                      id="contact-message"
-                      rows={5}
-                      required
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Write your message here..."
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-hidden resize-none"
-                    ></textarea>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-sm transition active:scale-95 disabled:opacity-50"
-                  >
-                    <Send className="w-3.5 h-3.5" />
-                    <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
-                  </button>
-                </form>
-              )}
+              {/* Email Field */}
+              <div>
+                <label htmlFor="contact-email" className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  Your Email <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="name@example.com"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-hidden"
+                />
+              </div>
             </div>
-          </div>
+
+            {/* Subject Field */}
+            <div>
+              <label htmlFor="contact-subject" className="block text-xs font-semibold text-slate-700 mb-1.5">
+                Subject (Optional)
+              </label>
+              <input
+                id="contact-subject"
+                type="text"
+                value={formData.subject}
+                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                placeholder="e.g. Feedback on WebP conversion or feature idea"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-hidden"
+              />
+            </div>
+
+            {/* Message Field */}
+            <div>
+              <label htmlFor="contact-message" className="block text-xs font-semibold text-slate-700 mb-1.5">
+                Message <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                id="contact-message"
+                rows={6}
+                required
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                placeholder="Write your question, suggestion, or feedback here..."
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-hidden resize-none"
+              ></textarea>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="pt-2 flex flex-wrap items-center gap-3">
+              <button
+                type="submit"
+                className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-xs transition active:scale-95 cursor-pointer"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>Open in Email App</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleCopyToClipboard}
+                className="px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs flex items-center justify-center gap-2 transition active:scale-95 cursor-pointer"
+              >
+                {copied ? (
+                  <>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    <span className="text-emerald-700">Copied to Clipboard!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Copy Formatted Message</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {showManualText && (
+              <div className="mt-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-slate-700">Your Formatted Message:</span>
+                  <span className="text-[11px] text-slate-500">Select all & copy (Ctrl+C / ⌘+C)</span>
+                </div>
+                <textarea
+                  readOnly
+                  rows={6}
+                  value={formatMessagePayload()}
+                  onClick={(e) => (e.target as HTMLTextAreaElement).select()}
+                  className="w-full p-2.5 rounded-lg border border-slate-300 bg-white font-mono text-xs text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            )}
+          </form>
+        </div>
+
+        {/* Additional honest clarity */}
+        <div className="mt-8 text-center text-xs text-slate-500">
+          OptiPress is an independent free web project. We do not operate call centers or commercial telephone lines.
         </div>
       </div>
     </div>
