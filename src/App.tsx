@@ -38,6 +38,34 @@ const DEFAULT_OPTIONS: ImageProcessingOptions = {
   scalePercent: 100,
 };
 
+const PAGE_SEO_METADATA: Record<ActivePage, { title: string; description: string }> = {
+  home: {
+    title: 'Free Online Image Compressor - OptiPress',
+    description:
+      'Compress JPG, PNG, and WebP images online for free with OptiPress. Fast, private, client-side image compression directly in your browser with zero server uploads.',
+  },
+  about: {
+    title: 'About Us - OptiPress',
+    description:
+      'Learn about OptiPress, a free browser-based image compressor designed to make reducing image file sizes fast, private, and accessible worldwide.',
+  },
+  privacy: {
+    title: 'Privacy Policy - OptiPress',
+    description:
+      'OptiPress Privacy Policy. Learn how our client-side image compressor processes images entirely in your browser with zero server uploads or tracking.',
+  },
+  terms: {
+    title: 'Terms of Use - OptiPress',
+    description:
+      'OptiPress Terms of Use. Read the guidelines, conditions, and fair use terms for using our free online image compression utility.',
+  },
+  contact: {
+    title: 'Contact Us - OptiPress',
+    description:
+      'Get in touch with the OptiPress team. Share your feedback, suggest improvements, or report issues regarding our free image compression tool.',
+  },
+};
+
 export default function App() {
   const [activePage, setActivePage] = useState<ActivePage>('home');
   const [items, setItems] = useState<CompressedItem[]>([]);
@@ -67,6 +95,27 @@ export default function App() {
     window.addEventListener('hashchange', handleHash);
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
+
+  // Update dynamic page SEO titles and meta descriptions as the user navigates
+  useEffect(() => {
+    const seo = PAGE_SEO_METADATA[activePage] || PAGE_SEO_METADATA.home;
+    document.title = seo.title;
+
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', seo.description);
+
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', seo.title);
+
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', seo.description);
+
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twitterTitle) twitterTitle.setAttribute('content', seo.title);
+
+    const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twitterDesc) twitterDesc.setAttribute('content', seo.description);
+  }, [activePage]);
 
   const showToast = (text: string, type: 'success' | 'info' | 'error' = 'info') => {
     setToastMessage({ text, type });
@@ -483,9 +532,9 @@ export default function App() {
 
                 {/* Main Hero Title */}
                 <h1 className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight leading-[1.1] mb-5">
-                  Compress Smarter.{' '}
-                  <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                    Save More.
+                  Free Online Image Compressor
+                  <span className="block text-2xl sm:text-4xl font-extrabold mt-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    Compress Smarter. Save More.
                   </span>
                 </h1>
 

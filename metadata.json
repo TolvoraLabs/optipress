@@ -1,6 +1,6 @@
 {
   "name": "OptiPress - Free Online Image Compressor",
-  "description": "Compress Smarter. Save More. Fast, private, client-side image compression for JPG, PNG, and WebP with zero server uploads.",
+  "description": "Compress JPG, PNG, and WebP images online for free with OptiPress. Fast, private, client-side image compression directly in your browser with zero server uploads.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

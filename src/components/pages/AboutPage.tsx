@@ -37,9 +37,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onGoToCompressor, onNaviga
             About Us
           </span>
           <h1 className="text-3xl sm:text-5xl font-black text-slate-900 mt-4 tracking-tight">
-            Compress Smarter. <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Save More.</span>
+            About OptiPress
           </h1>
-          <p className="text-slate-600 text-base sm:text-xl mt-4 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-blue-600 font-semibold text-base mt-2">
+            Compress Smarter. Save More.
+          </p>
+          <p className="text-slate-600 text-base sm:text-xl mt-3 max-w-2xl mx-auto leading-relaxed">
             OptiPress is a free online image compressor designed to make reducing file sizes fast, simple, and private for everyone around the world.
           </p>
         </div>

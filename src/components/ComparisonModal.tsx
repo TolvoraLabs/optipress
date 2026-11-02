@@ -167,7 +167,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({ item, onClose 
               {/* Compressed Image (Background) */}
               <img
                 src={compressedUrl}
-                alt="Compressed preview"
+                alt={`Compressed preview of ${item.name}`}
                 className="max-w-full max-h-[65vh] object-contain pointer-events-none"
               />
 
@@ -178,7 +178,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({ item, onClose 
               >
                 <img
                   src={item.originalUrl}
-                  alt="Original image"
+                  alt={`Original uncompressed ${item.name}`}
                   className="max-w-full max-h-[65vh] object-contain"
                 />
               </div>
@@ -210,7 +210,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({ item, onClose 
                 </span>
                 <img
                   src={item.originalUrl}
-                  alt="Original preview"
+                  alt={`Original uncompressed ${item.name}`}
                   className="max-w-full max-h-[50vh] object-contain rounded"
                 />
               </div>
@@ -220,7 +220,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({ item, onClose 
                 </span>
                 <img
                   src={compressedUrl}
-                  alt="Compressed preview"
+                  alt={`Compressed preview of ${item.name}`}
                   className="max-w-full max-h-[50vh] object-contain rounded"
                 />
               </div>

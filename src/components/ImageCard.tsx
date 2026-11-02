@@ -157,7 +157,7 @@ export const ImageCard: React.FC<ImageCardProps> = ({
         <div className="relative group shrink-0 w-full sm:w-24 h-24 sm:h-24 bg-slate-100 rounded-lg overflow-hidden border border-slate-200/80 flex items-center justify-center">
           <img
             src={item.compressedUrl || item.originalUrl}
-            alt={item.name}
+            alt={`Preview of ${item.name} (${item.status === 'success' ? 'compressed' : 'original'})`}
             className="w-full h-full object-cover transition duration-200 group-hover:scale-105"
           />
           {item.status === 'success' && (

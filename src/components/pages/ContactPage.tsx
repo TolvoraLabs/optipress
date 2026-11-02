@@ -136,10 +136,10 @@ Sent regarding OptiPress (Online Image Compressor)`;
             Contact Us
           </span>
           <h1 className="text-3xl sm:text-5xl font-black text-slate-900 mt-4 tracking-tight">
-            Get in Touch
+            Contact OptiPress
           </h1>
           <p className="text-slate-600 text-base sm:text-lg mt-3 max-w-xl mx-auto leading-relaxed">
-            Have questions, suggestions, bug reports, or feedback about OptiPress? Fill out the form below.
+            Have questions, suggestions, bug reports, or feedback? Get in touch with us below.
           </p>
         </div>
 
