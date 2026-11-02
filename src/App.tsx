@@ -80,23 +80,31 @@ export default function App() {
   const batchVersionRef = useRef<number>(0);
   const isInitialLoad = useRef<boolean>(true);
 
-  // Sync hash routing if user opens with #about, #contact, #privacy, #terms
+  // Sync pathname and hash routing so both /about and #about, etc. resolve correctly
   useEffect(() => {
-    const handleHash = () => {
+    const handleRoute = () => {
+      const path = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
       const hash = window.location.hash.replace('#', '').toLowerCase();
-      if (['about', 'contact', 'privacy', 'terms'].includes(hash)) {
+      const validPages: ActivePage[] = ['about', 'contact', 'privacy', 'terms'];
+      if (validPages.includes(path as ActivePage)) {
+        setActivePage(path as ActivePage);
+      } else if (validPages.includes(hash as ActivePage)) {
         setActivePage(hash as ActivePage);
-      } else if (hash === 'home' || hash === '') {
+      } else {
         setActivePage('home');
       }
     };
 
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
+    handleRoute();
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('popstate', handleRoute);
+    return () => {
+      window.removeEventListener('hashchange', handleRoute);
+      window.removeEventListener('popstate', handleRoute);
+    };
   }, []);
 
-  // Update dynamic page SEO titles and meta descriptions as the user navigates
+  // Update dynamic page SEO titles, canonical links, and meta descriptions as the user navigates
   useEffect(() => {
     const seo = PAGE_SEO_METADATA[activePage] || PAGE_SEO_METADATA.home;
     document.title = seo.title;
@@ -115,6 +123,18 @@ export default function App() {
 
     const twitterDesc = document.querySelector('meta[name="twitter:description"]');
     if (twitterDesc) twitterDesc.setAttribute('content', seo.description);
+
+    const baseUrl = 'https://optipress-free-online-image-compressor.ai.studio';
+    const pagePath = activePage === 'home' ? '/' : `/${activePage}`;
+    const canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (canonicalLink) {
+      canonicalLink.setAttribute('href', `${baseUrl}${pagePath}`);
+    }
+
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) {
+      ogUrl.setAttribute('content', `${baseUrl}${pagePath}`);
+    }
   }, [activePage]);
 
   const showToast = (text: string, type: 'success' | 'info' | 'error' = 'info') => {
@@ -126,7 +146,10 @@ export default function App() {
 
   const handleNavigate = (page: ActivePage) => {
     setActivePage(page);
-    window.location.hash = page === 'home' ? '' : page;
+    const targetPath = page === 'home' ? '/' : `/${page}`;
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState({ page }, '', targetPath);
+    }
   };
 
   const handleScrollToSection = (sectionId: string) => {

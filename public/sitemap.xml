@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage & Core Image Compressor -->
   <url>
-    <loc>https://optipress.app/</loc>
+    <loc>https://optipress-free-online-image-compressor.ai.studio/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- About OptiPress Page -->
   <url>
-    <loc>https://optipress.app/#about</loc>
+    <loc>https://optipress-free-online-image-compressor.ai.studio/about</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Privacy Policy Page -->
   <url>
-    <loc>https://optipress.app/#privacy</loc>
+    <loc>https://optipress-free-online-image-compressor.ai.studio/privacy</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- Terms of Use Page -->
   <url>
-    <loc>https://optipress.app/#terms</loc>
+    <loc>https://optipress-free-online-image-compressor.ai.studio/terms</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- Contact Us Page -->
   <url>
-    <loc>https://optipress.app/#contact</loc>
+    <loc>https://optipress-free-online-image-compressor.ai.studio/contact</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

@@ -2,5 +2,5 @@
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://optipress.app/sitemap.xml
+# XML Sitemap
+Sitemap: https://optipress-free-online-image-compressor.ai.studio/sitemap.xml
