@@ -131,10 +131,13 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ onGoToCompressor }) =>
           <div className="pt-2">
             <h2 className="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2">
               <EyeOff className="w-5 h-5 text-slate-700" />
-              4. Third-Party Services & Analytics
+              4. Analytics & Third-Party Services
             </h2>
+            <p className="text-xs sm:text-sm text-slate-600 mb-2">
+              OptiPress uses Google Analytics 4 (Measurement ID: G-1BWXZEQ0S0) to understand aggregate visitor counts, page views, and general website performance.
+            </p>
             <p className="text-xs sm:text-sm text-slate-600">
-              OptiPress does not integrate third-party advertising networks, analytics trackers, or external image-processing APIs. All image compression logic is executed by the code running in your browser.
+              Google Analytics does not collect, receive, or inspect any image files or photos you compress. All image compression logic executes strictly client-side on your local device. We do not integrate third-party advertising networks or external image-processing APIs.
             </p>
           </div>
 

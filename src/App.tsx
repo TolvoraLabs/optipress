@@ -135,6 +135,16 @@ export default function App() {
     if (ogUrl) {
       ogUrl.setAttribute('content', `${baseUrl}${pagePath}`);
     }
+
+    // Report page_view to Google Analytics 4 if available
+    const win = window as unknown as { gtag?: (...args: unknown[]) => void };
+    if (typeof win.gtag === 'function') {
+      win.gtag('event', 'page_view', {
+        page_title: seo.title,
+        page_location: `${baseUrl}${pagePath}`,
+        page_path: pagePath,
+      });
+    }
   }, [activePage]);
 
   const showToast = (text: string, type: 'success' | 'info' | 'error' = 'info') => {
