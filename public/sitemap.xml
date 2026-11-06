@@ -47,4 +47,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- Image Compression Guides & Resources -->
+  <url>
+    <loc>https://optipress-free-online-image-compressor.ai.studio/guides</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

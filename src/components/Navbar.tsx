@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, ShieldCheck, Sparkles, Layers } from 'lucide-react';
 
-export type ActivePage = 'home' | 'about' | 'contact' | 'privacy' | 'terms' | 'disclaimer';
+export type ActivePage = 'home' | 'about' | 'contact' | 'privacy' | 'terms' | 'disclaimer' | 'guides';
 
 interface NavbarProps {
   activePage: ActivePage;
@@ -93,6 +93,18 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onScroll
 
             <button
               type="button"
+              onClick={() => handleNavClick('guides')}
+              className={`px-3 py-2 rounded-lg text-xs font-semibold transition ${
+                activePage === 'guides'
+                  ? 'text-blue-600 bg-blue-50/80'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+              }`}
+            >
+              Guides
+            </button>
+
+            <button
+              type="button"
               onClick={() => handleNavClick('about')}
               className={`px-3 py-2 rounded-lg text-xs font-semibold transition ${
                 activePage === 'about'
@@ -178,6 +190,15 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onScroll
             className="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50"
           >
             FAQ
+          </button>
+          <button
+            type="button"
+            onClick={() => handleNavClick('guides')}
+            className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold ${
+              activePage === 'guides' ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-50'
+            }`}
+          >
+            Guides & Resources
           </button>
           <button
             type="button"

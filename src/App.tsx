@@ -16,6 +16,7 @@ import { ContactPage } from './components/pages/ContactPage';
 import { PrivacyPage } from './components/pages/PrivacyPage';
 import { TermsPage } from './components/pages/TermsPage';
 import { DisclaimerPage } from './components/pages/DisclaimerPage';
+import { GuidesPage } from './components/pages/GuidesPage';
 import {
   CompressedItem,
   ImageProcessingOptions,
@@ -70,6 +71,11 @@ const PAGE_SEO_METADATA: Record<ActivePage, { title: string; description: string
     description:
       'OptiPress Disclaimer. Read our official disclosures regarding client-side image compression, results variability, service availability, and reasonable limitations of liability.',
   },
+  guides: {
+    title: 'Image Compression Guides & Resources - OptiPress',
+    description:
+      'Learn how to compress images for the web without making them look blurry. Practical guides on JPG, PNG, and WebP optimization, resizing, and web performance.',
+  },
 };
 
 export default function App() {
@@ -91,7 +97,7 @@ export default function App() {
     const handleRoute = () => {
       const path = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
       const hash = window.location.hash.replace('#', '').toLowerCase();
-      const validPages: ActivePage[] = ['about', 'contact', 'privacy', 'terms', 'disclaimer'];
+      const validPages: ActivePage[] = ['about', 'contact', 'privacy', 'terms', 'disclaimer', 'guides'];
       if (validPages.includes(path as ActivePage)) {
         setActivePage(path as ActivePage);
       } else if (validPages.includes(hash as ActivePage)) {
@@ -661,6 +667,13 @@ export default function App() {
             onGoToCompressor={() => handleNavigate('home')}
             onNavigateToContact={() => handleNavigate('contact')}
             onNavigateToPrivacy={() => handleNavigate('privacy')}
+          />
+        )}
+
+        {activePage === 'guides' && (
+          <GuidesPage
+            onGoToCompressor={() => handleNavigate('home')}
+            onNavigateToContact={() => handleNavigate('contact')}
           />
         )}
       </main>

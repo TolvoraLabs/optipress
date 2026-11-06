@@ -91,6 +91,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onScrollToSection })
                   Frequently Asked Questions
                 </button>
               </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => handleLink('guides')}
+                  className="hover:text-white transition flex items-center gap-1.5 cursor-pointer font-medium text-slate-300"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+                  Guides & Resources
+                </button>
+              </li>
             </ul>
           </div>
 
