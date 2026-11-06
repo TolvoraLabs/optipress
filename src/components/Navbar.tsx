@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, ShieldCheck, Sparkles, Layers } from 'lucide-react';
 
-export type ActivePage = 'home' | 'about' | 'contact' | 'privacy' | 'terms';
+export type ActivePage = 'home' | 'about' | 'contact' | 'privacy' | 'terms' | 'disclaimer';
 
 interface NavbarProps {
   activePage: ActivePage;
@@ -214,6 +214,15 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onScroll
             }`}
           >
             Terms of Use
+          </button>
+          <button
+            type="button"
+            onClick={() => handleNavClick('disclaimer')}
+            className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold ${
+              activePage === 'disclaimer' ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-50'
+            }`}
+          >
+            Disclaimer
           </button>
         </div>
       )}

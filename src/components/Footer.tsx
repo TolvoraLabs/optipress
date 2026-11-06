@@ -135,13 +135,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onScrollToSection })
 
           {/* Col 4: Legal & Privacy Pages */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-3">Privacy & Terms</h4>
+            <h4 className="text-white font-semibold text-sm mb-3">Privacy & Legal</h4>
             <ul className="space-y-2.5">
               <li>
                 <button
                   type="button"
                   onClick={() => handleLink('privacy')}
-                  className="hover:text-white transition flex items-center gap-1.5 font-medium"
+                  className="hover:text-white transition flex items-center gap-1.5 font-medium cursor-pointer"
                 >
                   <ArrowRight className="w-3.5 h-3.5 text-emerald-400" />
                   Privacy Policy
@@ -151,15 +151,25 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onScrollToSection })
                 <button
                   type="button"
                   onClick={() => handleLink('terms')}
-                  className="hover:text-white transition flex items-center gap-1.5 font-medium"
+                  className="hover:text-white transition flex items-center gap-1.5 font-medium cursor-pointer"
                 >
                   <ArrowRight className="w-3.5 h-3.5 text-purple-400" />
                   Terms of Use
                 </button>
               </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => handleLink('disclaimer')}
+                  className="hover:text-white transition flex items-center gap-1.5 font-medium cursor-pointer"
+                >
+                  <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
+                  Disclaimer
+                </button>
+              </li>
             </ul>
             <p className="mt-4 text-[11px] text-slate-500 leading-relaxed">
-              Transparent, honest policies accurately reflecting our client-side, zero-tracking web architecture.
+              Transparent, honest policies and disclaimers accurately reflecting our client-side image compression architecture.
             </p>
           </div>
         </div>
