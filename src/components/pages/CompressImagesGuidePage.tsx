@@ -478,6 +478,19 @@ export const CompressImagesGuidePage: React.FC<CompressImagesGuidePageProps> = (
                   </p>
                 </div>
               </div>
+
+              {/* Before-and-After Comparison Image */}
+              <figure className="my-6 rounded-2xl overflow-hidden border border-slate-200 bg-slate-900 shadow-xs">
+                <img
+                  src="/assets/aistudio/Screenshot_2026-11-06_163208_798bf851.png"
+                  alt="Original and compressed image comparison showing original 158.4 KB and output 145.8 KB at 75% quality"
+                  className="w-full h-auto object-cover block"
+                  loading="lazy"
+                />
+                <figcaption className="p-3 sm:p-3.5 text-xs text-slate-600 bg-slate-50 border-t border-slate-200 leading-relaxed text-center sm:text-left">
+                  Original and compressed image comparison at 75% quality. In this example, the file size decreased from 158.4 KB to 145.8 KB (8% savings). Results vary by image.
+                </figcaption>
+              </figure>
             </section>
 
             {/* Section 8 */}
