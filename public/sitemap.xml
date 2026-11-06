@@ -55,4 +55,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Dedicated Tutorial: Compress Images for Web Without Blur -->
+  <url>
+    <loc>https://optipress-free-online-image-compressor.ai.studio/guides/compress-images-for-web</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

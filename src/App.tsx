@@ -17,6 +17,7 @@ import { PrivacyPage } from './components/pages/PrivacyPage';
 import { TermsPage } from './components/pages/TermsPage';
 import { DisclaimerPage } from './components/pages/DisclaimerPage';
 import { GuidesPage } from './components/pages/GuidesPage';
+import { CompressImagesGuidePage } from './components/pages/CompressImagesGuidePage';
 import {
   CompressedItem,
   ImageProcessingOptions,
@@ -76,6 +77,11 @@ const PAGE_SEO_METADATA: Record<ActivePage, { title: string; description: string
     description:
       'Learn how to compress images for the web without making them look blurry. Practical guides on JPG, PNG, and WebP optimization, resizing, and web performance.',
   },
+  'guide-compress-web': {
+    title: 'How to Compress Images for Web Without Blur - OptiPress Guide',
+    description:
+      'Comprehensive step-by-step tutorial on compressing JPG, PNG, and WebP images for the web without blurriness. Learn ideal quality settings, resizing, and format choice.',
+  },
 };
 
 export default function App() {
@@ -97,6 +103,16 @@ export default function App() {
     const handleRoute = () => {
       const path = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
       const hash = window.location.hash.replace('#', '').toLowerCase();
+      if (
+        path === 'guides/compress-images-for-web' ||
+        path === 'guides/compress-images-for-web.html' ||
+        hash === 'guides/compress-images-for-web' ||
+        hash === 'compress-images-for-web' ||
+        hash === 'guide-compress-web'
+      ) {
+        setActivePage('guide-compress-web');
+        return;
+      }
       const validPages: ActivePage[] = ['about', 'contact', 'privacy', 'terms', 'disclaimer', 'guides'];
       if (validPages.includes(path as ActivePage)) {
         setActivePage(path as ActivePage);
@@ -137,7 +153,14 @@ export default function App() {
     if (twitterDesc) twitterDesc.setAttribute('content', seo.description);
 
     const baseUrl = 'https://optipress-free-online-image-compressor.ai.studio';
-    const pagePath = activePage === 'home' ? '/' : `/${activePage}`;
+    let pagePath = '/';
+    if (activePage === 'home') {
+      pagePath = '/';
+    } else if (activePage === 'guide-compress-web') {
+      pagePath = '/guides/compress-images-for-web';
+    } else {
+      pagePath = `/${activePage}`;
+    }
     const canonicalLink = document.querySelector('link[rel="canonical"]');
     if (canonicalLink) {
       canonicalLink.setAttribute('href', `${baseUrl}${pagePath}`);
@@ -168,7 +191,14 @@ export default function App() {
 
   const handleNavigate = (page: ActivePage) => {
     setActivePage(page);
-    const targetPath = page === 'home' ? '/' : `/${page}`;
+    let targetPath = '/';
+    if (page === 'home') {
+      targetPath = '/';
+    } else if (page === 'guide-compress-web') {
+      targetPath = '/guides/compress-images-for-web';
+    } else {
+      targetPath = `/${page}`;
+    }
     if (window.location.pathname !== targetPath) {
       window.history.pushState({ page }, '', targetPath);
     }
@@ -673,6 +703,15 @@ export default function App() {
         {activePage === 'guides' && (
           <GuidesPage
             onGoToCompressor={() => handleNavigate('home')}
+            onNavigateToArticle={() => handleNavigate('guide-compress-web')}
+            onNavigateToContact={() => handleNavigate('contact')}
+          />
+        )}
+
+        {activePage === 'guide-compress-web' && (
+          <CompressImagesGuidePage
+            onGoToCompressor={() => handleNavigate('home')}
+            onNavigateToGuides={() => handleNavigate('guides')}
             onNavigateToContact={() => handleNavigate('contact')}
           />
         )}
