@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, ShieldCheck, Sparkles, Layers } from 'lucide-react';
 
-export type ActivePage = 'home' | 'about' | 'contact' | 'privacy' | 'terms' | 'disclaimer' | 'guides' | 'guide-compress-web' | 'guide-webp-jpg-png';
+export type ActivePage = 'home' | 'about' | 'contact' | 'privacy' | 'terms' | 'disclaimer' | 'guides' | 'guide-compress-web' | 'guide-webp-jpg-png' | 'guide-image-sizes';
 
 interface NavbarProps {
   activePage: ActivePage;

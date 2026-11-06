@@ -19,6 +19,7 @@ import { DisclaimerPage } from './components/pages/DisclaimerPage';
 import { GuidesPage } from './components/pages/GuidesPage';
 import { CompressImagesGuidePage } from './components/pages/CompressImagesGuidePage';
 import { WebpVsJpgVsPngGuidePage } from './components/pages/WebpVsJpgVsPngGuidePage';
+import { BestImageSizesGuidePage } from './components/pages/BestImageSizesGuidePage';
 import {
   CompressedItem,
   ImageProcessingOptions,
@@ -88,6 +89,11 @@ const PAGE_SEO_METADATA: Record<ActivePage, { title: string; description: string
     description:
       'Detailed comparison of WebP, JPG, and PNG image formats for websites. Understand transparency, compression quality, browser support, and when to choose each format.',
   },
+  'guide-image-sizes': {
+    title: "Best Image Sizes for Websites: A Beginner's Guide - OptiPress",
+    description:
+      "Complete beginner's guide to optimal website image sizes and dimensions. Learn recommended pixel dimensions for hero banners, blogs, products, and thumbnails.",
+  },
 };
 
 export default function App() {
@@ -127,6 +133,16 @@ export default function App() {
         hash === 'guide-webp-jpg-png'
       ) {
         setActivePage('guide-webp-jpg-png');
+        return;
+      }
+      if (
+        path === 'guides/best-image-sizes-for-websites' ||
+        path === 'guides/best-image-sizes-for-websites.html' ||
+        hash === 'guides/best-image-sizes-for-websites' ||
+        hash === 'best-image-sizes-for-websites' ||
+        hash === 'guide-image-sizes'
+      ) {
+        setActivePage('guide-image-sizes');
         return;
       }
       const validPages: ActivePage[] = ['about', 'contact', 'privacy', 'terms', 'disclaimer', 'guides'];
@@ -176,6 +192,8 @@ export default function App() {
       pagePath = '/guides/compress-images-for-web';
     } else if (activePage === 'guide-webp-jpg-png') {
       pagePath = '/guides/webp-vs-jpg-vs-png';
+    } else if (activePage === 'guide-image-sizes') {
+      pagePath = '/guides/best-image-sizes-for-websites';
     } else {
       pagePath = `/${activePage}`;
     }
@@ -216,6 +234,8 @@ export default function App() {
       targetPath = '/guides/compress-images-for-web';
     } else if (page === 'guide-webp-jpg-png') {
       targetPath = '/guides/webp-vs-jpg-vs-png';
+    } else if (page === 'guide-image-sizes') {
+      targetPath = '/guides/best-image-sizes-for-websites';
     } else {
       targetPath = `/${page}`;
     }
@@ -725,6 +745,7 @@ export default function App() {
             onGoToCompressor={() => handleNavigate('home')}
             onNavigateToCompressGuide={() => handleNavigate('guide-compress-web')}
             onNavigateToFormatGuide={() => handleNavigate('guide-webp-jpg-png')}
+            onNavigateToImageSizesGuide={() => handleNavigate('guide-image-sizes')}
             onNavigateToContact={() => handleNavigate('contact')}
           />
         )}
@@ -741,6 +762,16 @@ export default function App() {
           <WebpVsJpgVsPngGuidePage
             onGoToCompressor={() => handleNavigate('home')}
             onNavigateToGuides={() => handleNavigate('guides')}
+            onNavigateToContact={() => handleNavigate('contact')}
+          />
+        )}
+
+        {activePage === 'guide-image-sizes' && (
+          <BestImageSizesGuidePage
+            onGoToCompressor={() => handleNavigate('home')}
+            onNavigateToGuides={() => handleNavigate('guides')}
+            onNavigateToCompressGuide={() => handleNavigate('guide-compress-web')}
+            onNavigateToFormatGuide={() => handleNavigate('guide-webp-jpg-png')}
             onNavigateToContact={() => handleNavigate('contact')}
           />
         )}

@@ -11,12 +11,14 @@ import {
   CheckCircle2,
   Layers,
   HelpCircle,
+  Layout,
 } from 'lucide-react';
 
 interface GuidesPageProps {
   onGoToCompressor?: () => void;
   onNavigateToCompressGuide?: () => void;
   onNavigateToFormatGuide?: () => void;
+  onNavigateToImageSizesGuide?: () => void;
   onNavigateToContact?: () => void;
 }
 
@@ -24,6 +26,7 @@ export const GuidesPage: React.FC<GuidesPageProps> = ({
   onGoToCompressor,
   onNavigateToCompressGuide,
   onNavigateToFormatGuide,
+  onNavigateToImageSizesGuide,
   onNavigateToContact,
 }) => {
   return (
@@ -105,7 +108,7 @@ export const GuidesPage: React.FC<GuidesPageProps> = ({
               <Sparkles className="w-5 h-5 text-blue-600" />
               In-Depth Tutorials &amp; Comparison Guides
             </h2>
-            <span className="text-xs text-slate-500 font-medium">2 Dedicated Guides</span>
+            <span className="text-xs text-slate-500 font-medium">3 Dedicated Guides</span>
           </div>
 
           {/* Tutorial Card 1: Compression without Blur */}
@@ -230,6 +233,69 @@ export const GuidesPage: React.FC<GuidesPageProps> = ({
 
               <span className="text-xs text-slate-500 font-mono">
                 /guides/webp-vs-jpg-vs-png
+              </span>
+            </div>
+          </div>
+
+          {/* Tutorial Card 3: Best Image Sizes for Websites */}
+          <div className="border border-slate-200 rounded-3xl p-6 sm:p-8 bg-white hover:border-emerald-300 transition shadow-xs">
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+                Sizing &amp; Dimensions Guide
+              </span>
+              <span className="text-xs text-slate-500 flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5" /> 8 min read
+              </span>
+              <span className="text-xs text-slate-400">•</span>
+              <span className="text-xs text-slate-500">8 Chapters</span>
+            </div>
+
+            <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              Best Image Sizes for Websites: A Beginner&apos;s Guide
+            </h3>
+
+            <p className="text-slate-600 text-sm mt-3 leading-relaxed">
+              A comprehensive walkthrough on choosing the right pixel dimensions and aspect ratios for your website. Covers recommended resolutions for hero banners, blog headers, body content, e-commerce products, and thumbnails, with a full comparison table and practical resizing tips.
+            </p>
+
+            {/* Highlights */}
+            <div className="my-5 p-4 rounded-2xl bg-slate-50 border border-slate-200/90 text-xs sm:text-sm">
+              <strong className="text-slate-900 block font-semibold mb-2">
+                Key Topics Covered:
+              </strong>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-600">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Pixel dimensions vs. storage file weight (KB/MB)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Recommended pixel sizes for heroes, blogs, and products</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Aspect ratios (16:9, 4:3, 1:1, 3:2) &amp; layout stability</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Two-step resizing &amp; compression workflow with OptiPress</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Read Article Action */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-1">
+              <button
+                type="button"
+                onClick={onNavigateToImageSizesGuide}
+                className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs flex items-center gap-2 shadow-xs transition active:scale-95 cursor-pointer"
+              >
+                <span>Read Image Sizing Guide</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+
+              <span className="text-xs text-slate-500 font-mono">
+                /guides/best-image-sizes-for-websites
               </span>
             </div>
           </div>

@@ -71,4 +71,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Dedicated Tutorial: Best Image Sizes for Websites -->
+  <url>
+    <loc>https://optipress-free-online-image-compressor.ai.studio/guides/best-image-sizes-for-websites</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
