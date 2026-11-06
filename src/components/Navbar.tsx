@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, ShieldCheck, Sparkles, Layers } from 'lucide-react';
 
-export type ActivePage = 'home' | 'about' | 'contact' | 'privacy' | 'terms' | 'disclaimer' | 'guides' | 'guide-compress-web';
+export type ActivePage = 'home' | 'about' | 'contact' | 'privacy' | 'terms' | 'disclaimer' | 'guides' | 'guide-compress-web' | 'guide-webp-jpg-png';
 
 interface NavbarProps {
   activePage: ActivePage;
@@ -95,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onScroll
               type="button"
               onClick={() => handleNavClick('guides')}
               className={`px-3 py-2 rounded-lg text-xs font-semibold transition ${
-                activePage === 'guides' || activePage === 'guide-compress-web'
+                activePage === 'guides' || activePage === 'guide-compress-web' || activePage === 'guide-webp-jpg-png'
                   ? 'text-blue-600 bg-blue-50/80'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
               }`}
@@ -195,7 +195,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onScroll
             type="button"
             onClick={() => handleNavClick('guides')}
             className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold ${
-              activePage === 'guides' || activePage === 'guide-compress-web' ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-50'
+              activePage === 'guides' || activePage === 'guide-compress-web' || activePage === 'guide-webp-jpg-png' ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-50'
             }`}
           >
             Guides & Resources

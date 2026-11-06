@@ -63,4 +63,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Dedicated Tutorial: WebP vs JPG vs PNG Format Comparison -->
+  <url>
+    <loc>https://optipress-free-online-image-compressor.ai.studio/guides/webp-vs-jpg-vs-png</loc>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

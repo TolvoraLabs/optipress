@@ -18,6 +18,7 @@ import { TermsPage } from './components/pages/TermsPage';
 import { DisclaimerPage } from './components/pages/DisclaimerPage';
 import { GuidesPage } from './components/pages/GuidesPage';
 import { CompressImagesGuidePage } from './components/pages/CompressImagesGuidePage';
+import { WebpVsJpgVsPngGuidePage } from './components/pages/WebpVsJpgVsPngGuidePage';
 import {
   CompressedItem,
   ImageProcessingOptions,
@@ -82,6 +83,11 @@ const PAGE_SEO_METADATA: Record<ActivePage, { title: string; description: string
     description:
       'Comprehensive step-by-step tutorial on compressing JPG, PNG, and WebP images for the web without blurriness. Learn ideal quality settings, resizing, and format choice.',
   },
+  'guide-webp-jpg-png': {
+    title: 'WebP vs JPG vs PNG: Which Image Format Should You Choose? - OptiPress',
+    description:
+      'Detailed comparison of WebP, JPG, and PNG image formats for websites. Understand transparency, compression quality, browser support, and when to choose each format.',
+  },
 };
 
 export default function App() {
@@ -111,6 +117,16 @@ export default function App() {
         hash === 'guide-compress-web'
       ) {
         setActivePage('guide-compress-web');
+        return;
+      }
+      if (
+        path === 'guides/webp-vs-jpg-vs-png' ||
+        path === 'guides/webp-vs-jpg-vs-png.html' ||
+        hash === 'guides/webp-vs-jpg-vs-png' ||
+        hash === 'webp-vs-jpg-vs-png' ||
+        hash === 'guide-webp-jpg-png'
+      ) {
+        setActivePage('guide-webp-jpg-png');
         return;
       }
       const validPages: ActivePage[] = ['about', 'contact', 'privacy', 'terms', 'disclaimer', 'guides'];
@@ -158,6 +174,8 @@ export default function App() {
       pagePath = '/';
     } else if (activePage === 'guide-compress-web') {
       pagePath = '/guides/compress-images-for-web';
+    } else if (activePage === 'guide-webp-jpg-png') {
+      pagePath = '/guides/webp-vs-jpg-vs-png';
     } else {
       pagePath = `/${activePage}`;
     }
@@ -196,6 +214,8 @@ export default function App() {
       targetPath = '/';
     } else if (page === 'guide-compress-web') {
       targetPath = '/guides/compress-images-for-web';
+    } else if (page === 'guide-webp-jpg-png') {
+      targetPath = '/guides/webp-vs-jpg-vs-png';
     } else {
       targetPath = `/${page}`;
     }
@@ -703,13 +723,22 @@ export default function App() {
         {activePage === 'guides' && (
           <GuidesPage
             onGoToCompressor={() => handleNavigate('home')}
-            onNavigateToArticle={() => handleNavigate('guide-compress-web')}
+            onNavigateToCompressGuide={() => handleNavigate('guide-compress-web')}
+            onNavigateToFormatGuide={() => handleNavigate('guide-webp-jpg-png')}
             onNavigateToContact={() => handleNavigate('contact')}
           />
         )}
 
         {activePage === 'guide-compress-web' && (
           <CompressImagesGuidePage
+            onGoToCompressor={() => handleNavigate('home')}
+            onNavigateToGuides={() => handleNavigate('guides')}
+            onNavigateToContact={() => handleNavigate('contact')}
+          />
+        )}
+
+        {activePage === 'guide-webp-jpg-png' && (
+          <WebpVsJpgVsPngGuidePage
             onGoToCompressor={() => handleNavigate('home')}
             onNavigateToGuides={() => handleNavigate('guides')}
             onNavigateToContact={() => handleNavigate('contact')}
