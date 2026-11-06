@@ -7,8 +7,7 @@ import {
   AlertCircle,
   ArrowLeft,
   MessageSquare,
-  ExternalLink,
-  ShieldAlert,
+  ShieldCheck,
 } from 'lucide-react';
 
 interface ContactPageProps {
@@ -24,6 +23,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onGoToCompressor }) =>
   });
 
   const [copied, setCopied] = useState(false);
+  const [emailCopied, setEmailCopied] = useState(false);
   const [preparedForEmail, setPreparedForEmail] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
   const [showManualText, setShowManualText] = useState(false);
@@ -38,6 +38,32 @@ ${formData.message.trim()}
 
 ---
 Sent regarding OptiPress (Online Image Compressor)`;
+  };
+
+  const handleCopyEmailAddress = async () => {
+    const emailToCopy = 'hello.optipress@gmail.com';
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(emailToCopy);
+        setEmailCopied(true);
+        setTimeout(() => setEmailCopied(false), 3000);
+      } else {
+        throw new Error('Clipboard API unavailable');
+      }
+    } catch {
+      const textArea = document.createElement('textarea');
+      textArea.value = emailToCopy;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 3000);
+    }
   };
 
   const handleOpenEmailClient = (e: React.FormEvent) => {
@@ -59,13 +85,13 @@ Sent regarding OptiPress (Online Image Compressor)`;
 
     const emailSubject = encodeURIComponent(
       formData.subject.trim()
-        ? `[OptiPress Feedback] ${formData.subject.trim()}`
-        : `[OptiPress Feedback] Inquiry from ${formData.name.trim()}`
+        ? `[OptiPress Inquiry] ${formData.subject.trim()}`
+        : `[OptiPress Inquiry] from ${formData.name.trim()}`
     );
     const emailBody = encodeURIComponent(formatMessagePayload());
 
-    // Launch user's default email client with pre-filled content
-    window.location.href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
+    // Launch user's default email client pre-addressed to hello.optipress@gmail.com
+    window.location.href = `mailto:hello.optipress@gmail.com?subject=${emailSubject}&body=${emailBody}`;
     setPreparedForEmail(true);
   };
 
@@ -122,7 +148,7 @@ Sent regarding OptiPress (Online Image Compressor)`;
             <button
               type="button"
               onClick={onGoToCompressor}
-              className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-blue-600 transition"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-blue-600 transition cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Image Compressor
@@ -139,8 +165,117 @@ Sent regarding OptiPress (Online Image Compressor)`;
             Contact OptiPress
           </h1>
           <p className="text-slate-600 text-base sm:text-lg mt-3 max-w-xl mx-auto leading-relaxed">
-            Have questions, suggestions, bug reports, or feedback? Get in touch with us below.
+            Have questions, feedback, privacy inquiries, or suggestions? Reach out directly to OptiPress.
           </p>
+        </div>
+
+        {/* Official Contact Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {/* Card 1: Official Public Email */}
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-2xs">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="p-2 rounded-xl bg-blue-100 text-blue-700">
+                  <Mail className="w-5 h-5" />
+                </span>
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200">
+                  Official Public Email
+                </span>
+              </div>
+              <h2 className="text-base font-bold text-slate-900 mb-1">
+                Direct Email Communication
+              </h2>
+              <p className="text-xs text-slate-600 mb-3">
+                Click below to launch your email client or copy our official address:
+              </p>
+
+              <div className="p-3 bg-white border border-slate-200 rounded-xl flex items-center justify-between gap-2 mb-4">
+                <a
+                  href="mailto:hello.optipress@gmail.com"
+                  className="text-blue-600 hover:text-blue-800 font-bold text-xs sm:text-sm underline break-all"
+                >
+                  hello.optipress@gmail.com
+                </a>
+                <button
+                  type="button"
+                  onClick={handleCopyEmailAddress}
+                  className="px-2.5 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer"
+                >
+                  {emailCopied ? (
+                    <>
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                      <span className="text-emerald-700">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Copy</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              <div className="space-y-1.5 text-xs text-slate-600">
+                <strong className="text-slate-900 block text-xs font-semibold mb-1">We use this address for:</strong>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Privacy enquiries & data rights (GDPR, DPDP, CCPA)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Customer support & technical troubleshooting</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>User feedback, bug reports & compression ideas</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>General business & partnership enquiries</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2: Postal Address Guidance */}
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-2xs">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="p-2 rounded-xl bg-purple-100 text-purple-700">
+                  <ShieldCheck className="w-5 h-5" />
+                </span>
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">
+                  Postal Inquiries
+                </span>
+              </div>
+              <h2 className="text-base font-bold text-slate-900 mb-1">
+                Where a Postal Address Is Requested
+              </h2>
+              <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                OptiPress operates as a free, independent digital web utility without a physical reception desk, walk-in office, or telephone call center.
+              </p>
+              <div className="p-3.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 leading-relaxed mb-3">
+                If you require a postal address for correspondence, formal notices, or regulatory communications, visitors are requested to contact us directly by email at{' '}
+                <a
+                  href="mailto:hello.optipress@gmail.com"
+                  className="text-blue-600 hover:text-blue-800 font-semibold underline"
+                >
+                  hello.optipress@gmail.com
+                </a>
+                .
+              </div>
+              <p className="text-[11px] text-slate-500 leading-relaxed">
+                Contact us at{' '}
+                <a
+                  href="mailto:hello.optipress@gmail.com"
+                  className="text-blue-600 hover:text-blue-800 underline font-medium"
+                >
+                  hello.optipress@gmail.com
+                </a>{' '}
+                for privacy enquiries, customer support, feedback, and general business enquiries. We aim to respond as soon as reasonably possible.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Transparent Communication Notice */}
@@ -148,7 +283,7 @@ Sent regarding OptiPress (Online Image Compressor)`;
           <MessageSquare className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
           <div className="leading-relaxed">
             <strong className="text-slate-900 block font-semibold mb-0.5">How this contact method works:</strong>
-            OptiPress is a client-side web utility that runs inside your browser without backend databases. Because of this, messages are not stored on an OptiPress server. Submitting this form prepares your message and launches your device's email client, or you can copy the text to send through any platform you prefer.
+            OptiPress is a client-side web utility that runs inside your browser without backend databases. Because of this, messages are not stored on an OptiPress server. Submitting the interactive form below prepares your message and launches your device's email client addressed directly to <span className="font-semibold text-blue-700">hello.optipress@gmail.com</span>, or you can copy the text to send through any webmail platform.
           </div>
         </div>
 
@@ -166,7 +301,7 @@ Sent regarding OptiPress (Online Image Compressor)`;
               <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600 mt-0.5" />
               <div>
                 <strong className="font-semibold block mb-0.5">Email Client Opened!</strong>
-                Your default email application was opened with your message pre-filled. If it didn't open automatically, use the "Copy Message to Clipboard" button below to copy and paste your text.
+                Your default email application was opened addressed to <strong className="underline">hello.optipress@gmail.com</strong> with your message pre-filled. If it didn't open automatically, use the "Copy Formatted Message" button below to copy and paste your text into an email to <strong className="underline">hello.optipress@gmail.com</strong>.
               </div>
             </div>
           )}
@@ -216,7 +351,7 @@ Sent regarding OptiPress (Online Image Compressor)`;
                 type="text"
                 value={formData.subject}
                 onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                placeholder="e.g. Feedback on WebP conversion or feature idea"
+                placeholder="e.g. Question on WebP conversion, privacy enquiry, or feature suggestion"
                 className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-hidden"
               />
             </div>
@@ -232,8 +367,8 @@ Sent regarding OptiPress (Online Image Compressor)`;
                 required
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                placeholder="Write your question, suggestion, or feedback here..."
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-hidden resize-none"
+                placeholder="Write your question, suggestion, privacy inquiry, or feedback here..."
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-hidden"
               ></textarea>
             </div>
 
@@ -255,7 +390,7 @@ Sent regarding OptiPress (Online Image Compressor)`;
                 {copied ? (
                   <>
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                    <span className="text-emerald-700">Copied to Clipboard!</span>
+                    <span className="text-emerald-700">Copied Message!</span>
                   </>
                 ) : (
                   <>
@@ -270,7 +405,7 @@ Sent regarding OptiPress (Online Image Compressor)`;
               <div className="mt-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-semibold text-slate-700">Your Formatted Message:</span>
-                  <span className="text-[11px] text-slate-500">Select all & copy (Ctrl+C / ⌘+C)</span>
+                  <span className="text-[11px] text-slate-500">Recipient: hello.optipress@gmail.com</span>
                 </div>
                 <textarea
                   readOnly
@@ -286,7 +421,14 @@ Sent regarding OptiPress (Online Image Compressor)`;
 
         {/* Additional honest clarity */}
         <div className="mt-8 text-center text-xs text-slate-500">
-          OptiPress is an independent free web project. We do not operate call centers or commercial telephone lines.
+          OptiPress is an independent free web project. Contact us at{' '}
+          <a
+            href="mailto:hello.optipress@gmail.com"
+            className="text-blue-600 hover:text-blue-800 underline font-medium"
+          >
+            hello.optipress@gmail.com
+          </a>{' '}
+          for privacy enquiries, customer support, feedback, and general business enquiries. We aim to respond as soon as reasonably possible.
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Globe, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Globe, ArrowRight, Mail } from 'lucide-react';
 import { ActivePage } from './Navbar';
 
 interface FooterProps {
@@ -112,15 +112,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onScrollToSection })
                 <button
                   type="button"
                   onClick={() => handleLink('contact')}
-                  className="hover:text-white transition flex items-center gap-1.5 font-medium"
+                  className="hover:text-white transition flex items-center gap-1.5 font-medium cursor-pointer"
                 >
                   <ArrowRight className="w-3.5 h-3.5 text-blue-400" />
                   Contact Us
                 </button>
               </li>
+              <li>
+                <a
+                  href="mailto:hello.optipress@gmail.com"
+                  className="hover:text-white transition flex items-center gap-1.5 font-medium text-slate-300"
+                >
+                  <Mail className="w-3.5 h-3.5 text-blue-400" />
+                  hello.optipress@gmail.com
+                </a>
+              </li>
             </ul>
             <p className="mt-4 text-[11px] text-slate-500 leading-relaxed">
-              OptiPress is a free, web-native utility created to provide private image compression without account walls or fees.
+              OptiPress is a free, web-native utility created to provide private image compression without account walls or fees. For support & enquiries: <a href="mailto:hello.optipress@gmail.com" className="text-slate-400 hover:text-white underline">hello.optipress@gmail.com</a>
             </p>
           </div>
 

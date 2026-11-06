@@ -52,7 +52,7 @@ const PAGE_SEO_METADATA: Record<ActivePage, { title: string; description: string
   privacy: {
     title: 'Privacy Policy - OptiPress',
     description:
-      'OptiPress Privacy Policy. Learn how our client-side image compressor processes images entirely in your browser with zero server uploads or tracking.',
+      'OptiPress Privacy Policy. Learn how our client-side image compressor processes images entirely in your browser with zero server uploads, and view our analytics disclosures.',
   },
   terms: {
     title: 'Terms of Use - OptiPress',
@@ -640,7 +640,10 @@ export default function App() {
         )}
 
         {activePage === 'privacy' && (
-          <PrivacyPage onGoToCompressor={() => handleNavigate('home')} />
+          <PrivacyPage
+            onGoToCompressor={() => handleNavigate('home')}
+            onNavigateToContact={() => handleNavigate('contact')}
+          />
         )}
 
         {activePage === 'terms' && (
